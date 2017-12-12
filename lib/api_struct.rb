@@ -14,5 +14,4 @@ require_relative 'api_struct/entity'
 require_relative 'api_struct/errors/entity'
 
 module ApiStruct
-
 end
