@@ -1,0 +1,49 @@
+AllCops:
+  Exclude:
+    - 'spec/**/*'
+  TargetRubyVersion: 2.4
+
+Rails:
+  Enabled: true
+
+HasAndBelongsToMany:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 35
+
+Rails/TimeZone:
+  Enabled: false
+
+Rails/Date:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+ClassAndModuleChildren:
+  Enabled: false
+
+FrozenStringLiteralComment:
+  Enabled: false
+
+Performance/TimesMap:
+  Enabled: false
