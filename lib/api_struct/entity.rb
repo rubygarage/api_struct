@@ -4,13 +4,15 @@ module ApiStruct
     extend Extensions::ApiClient
 
     class << self
-      attr_accessor :entity_attributes
+      def entity_attributes
+        @entity_attributes ||= []
+      end
 
-      def attr_entity(*attrs)
-        @entity_attributes = attrs
+      def attr_entity(*attrs, &block)
+        entity_attributes.concat attrs
 
-        entity_attributes.each do |attr|
-          define_entity_attribute_getter(attr)
+        attrs.each do |attr|
+          define_entity_attribute_getter(attr, &block)
           define_entity_attribute_setter(attr)
         end
       end
@@ -43,7 +45,7 @@ module ApiStruct
 
       def define_entity_attribute_getter(attr)
         define_method attr.to_s do
-          entity[attr]
+          block_given? ? yield(entity[attr]) : entity[attr]
         end
       end
 
@@ -56,7 +58,7 @@ module ApiStruct
 
     attr_reader :entity, :entity_status
 
-    def initialize(entity, status = true)
+    def initialize(entity, entity_status = true)
       raise EntityError, "#{entity} must be Hash" unless entity.is_a?(Hash)
       @entity = Hashie::Mash.new(extract_attributes(entity))
       @entity_status = entity_status
@@ -73,8 +75,8 @@ module ApiStruct
 
     private
 
-    def extract_attributes(entity_attributes)
-      entity_attributes.select { |key, value| self.class.entity_attributes.include?(key.to_sym) }
+    def extract_attributes(attributes)
+      attributes.select { |key, _value| self.class.entity_attributes.include?(key.to_sym) }
     end
   end
 

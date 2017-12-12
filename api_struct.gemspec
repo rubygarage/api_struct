@@ -5,8 +5,8 @@ require 'api_struct/version'
 Gem::Specification.new do |spec|
   spec.name          = 'api_struct'
   spec.version       = ApiStruct::VERSION
-  spec.authors       = ['bezrukavyi']
-  spec.email         = ['yaroslav.bezrukavyi@gmail.com']
+  spec.authors       = ['bezrukavyi', 'andy1341']
+  spec.email         = ['yaroslav.bezrukavyi@gmail.com', 'andrii.novikov1341@gmail.com']
 
   spec.summary       = 'Api entities'
   spec.description   = 'Api entities'

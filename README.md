@@ -47,6 +47,7 @@ class Network < ApiStruct::Entity
   client_service NetworkClient
 
   attr_entity :name, :id
+  attr_entity :state, &:to_sym
 
   has_entity :super_admin, as: User
 end
