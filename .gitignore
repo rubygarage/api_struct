@@ -11,3 +11,4 @@
 .rspec_status
 vendor/bundle
 .idea/
+.byebug_history
