@@ -21,11 +21,20 @@ Or install it yourself as:
 Initialize APIs routes:
 
 ```ruby
-ApiStruct::Client.configure do |config|
+ApiStruct::Settings.configure do |config|
   config.endpoints = {
-    first_api: 'http://localhost:3000/api/v1',
-    second_api: 'http://localhost:3001/api/v1',
-    # etc...
+    first_api: {
+      root: 'http://localhost:3000/api/v1',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': "Token SOME_TOKEN"
+      }
+    },
+    second_api: {
+      root: 'http://localhost:3001/api/v1',
+      # etc...
+    }
   }
 end
 ```
