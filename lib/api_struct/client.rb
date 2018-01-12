@@ -20,8 +20,7 @@ module ApiStruct
     HTTP_METHODS.each do |http_method|
       define_method http_method do |*args|
         begin
-          args[0] = root + first_arg(args)
-          wrap client.send(http_method, first_arg(args), args.pop)
+          wrap client.send(http_method, *http_argumets(args))
         rescue HTTP::ConnectionError => e
           failure(body: e.message, status: :not_connected)
         end
@@ -52,6 +51,12 @@ module ApiStruct
 
     def first_arg(args)
       args.first.to_s
+    end
+
+    def http_argumets(args)
+      args[0] = root + first_arg(args) if args[0].instance_of?(String)
+      args.unshift(root) if args[0].instance_of?(Hash)
+      args
     end
 
     def api_settings_exist
