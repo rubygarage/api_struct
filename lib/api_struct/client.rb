@@ -55,7 +55,7 @@ module ApiStruct
     end
 
     def api_settings_exist
-      return if respond_to?(:root) && respond_to?(:headers)
+      return if respond_to?(:root)
       raise RuntimeError, "\nSet api configuration for #{self.class}."
     end
   end
