@@ -2,36 +2,34 @@ module ApiStruct
   class Client
     attr_reader :client
 
-    HTTP_METHODS = %i[get post patch put delete].freeze
+    def self.method_missing(method_name, *args, &block)
+      endpoints = Settings.config.endpoints
+      return super unless endpoints.keys.include?(method_name)
 
-    def self.headers(value)
-      define_method :headers do
-        value
+      define_method(:root) do
+        endpoints[method_name][:root] + first_arg(args)
+      end
+
+      define_method(:headers) do
+        endpoints[method_name][:headers]
       end
     end
 
-    headers(
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    )
-
-    def initialize
-      @client = HTTP::Client.new(headers: headers)
-    end
-
-    def self.method_missing(m, *args, &block)
-      endpoints = Settings.config.endpoints
-      endpoints.keys.include?(m) ? define_method(:url) { endpoints[m] + first_arg(args) } : super
-    end
+    HTTP_METHODS = %i[get post patch put delete].freeze
 
     HTTP_METHODS.each do |http_method|
       define_method http_method do |*args|
         begin
-          wrap client.send(http_method, (url + first_arg(args)) )
+          wrap client.send(http_method, (root + first_arg(args)) )
         rescue HTTP::ConnectionError => e
           failure(body: e.message, status: :not_connected)
         end
       end
+    end
+
+    def initialize
+      api_settings_exist
+      @client = HTTP::Client.new(headers: headers)
     end
 
     private
@@ -53,6 +51,11 @@ module ApiStruct
 
     def first_arg(args)
       args.first.to_s
+    end
+
+    def api_settings_exist
+      return if respond_to?(:root) && respond_to?(:headers)
+      raise RuntimeError, "\nSet api configuration for #{self.class}."
     end
   end
 end
