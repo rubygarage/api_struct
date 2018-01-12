@@ -20,7 +20,8 @@ module ApiStruct
     HTTP_METHODS.each do |http_method|
       define_method http_method do |*args|
         begin
-          wrap client.send(http_method, (root + first_arg(args)) )
+          args[0] = root + first_arg(args)
+          wrap client.send(http_method, first_arg(args), args.pop)
         rescue HTTP::ConnectionError => e
           failure(body: e.message, status: :not_connected)
         end
