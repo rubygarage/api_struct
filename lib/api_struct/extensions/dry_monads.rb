@@ -10,7 +10,7 @@ module ApiStruct
       end
 
       def from_left(error)
-        ApiStruct::Errors::Entity.new({ status: error.status, body: error.body }, false)
+        ApiStruct::Errors::Entity.new({ status: error.status, body: error.body, error: true }, false)
       end
     end
   end
