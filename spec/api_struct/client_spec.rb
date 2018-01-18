@@ -1,11 +1,7 @@
 describe ApiStruct::Client do
-  ApiStruct::Settings.configure do |config|
-    config.endpoints = {
-      stub_api: {
-        root: 'https://jsonplaceholder.typicode.com'
-      }
-    }
-  end
+  extend Support::Stub
+
+  stub_api('https://jsonplaceholder.typicode.com')
 
   class StubClient < ApiStruct::Client
     stub_api '/posts'
@@ -18,10 +14,10 @@ describe ApiStruct::Client do
       patch("/#{id}", json: params)
     end
   end
-
-  context 'Get' do
-    it 'Success', type: :webmock do
-      VCR.use_cassette('posts/get_success') do
+  
+  context 'GET' do
+    it 'when successful response' do
+      VCR.use_cassette('posts/show_success') do
         response = StubClient.new.show(1)
         expect(response).to be_success
         expect(response.value[:id]).to eq(1)
@@ -29,8 +25,8 @@ describe ApiStruct::Client do
       end
     end
 
-    it 'Failure', type: :webmock do
-      VCR.use_cassette('posts/get_failure') do
+    it 'when failed response' do
+      VCR.use_cassette('posts/show_failure') do
         response = StubClient.new.show(101)
         expect(response).to be_failure
         expect(response.value.status).to eq(404)
@@ -38,8 +34,8 @@ describe ApiStruct::Client do
     end
   end
 
-  context 'Patch' do
-    it 'Success', type: :webmock do
+  context 'PATCH' do
+    it 'when successful response' do
       VCR.use_cassette('posts/update_success') do
         response = StubClient.new.update(1, title: FFaker::Name.name)
         expect(response).to be_success

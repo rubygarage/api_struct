@@ -1,11 +1,11 @@
 ---
 http_interactions:
 - request:
-    method: get
+    method: patch
     uri: https://jsonplaceholder.typicode.com/posts/1
     body:
       encoding: UTF-8
-      string: ''
+      string: '{"title":"Mistie Carter"}'
     headers:
       Accept:
       - application/json
@@ -23,16 +23,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 18 Jan 2018 10:58:08 GMT
+      - Thu, 18 Jan 2018 19:23:36 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '292'
+      - '231'
       Connection:
       - close
       Set-Cookie:
-      - __cfduid=d9eb7ceabc5005fa8a1ce762c5429f6b61516273088; expires=Fri, 18-Jan-19
-        10:58:08 GMT; path=/; domain=.typicode.com; HttpOnly
+      - __cfduid=d3beb9d4061acf63428653caa383356a31516303416; expires=Fri, 18-Jan-19
+        19:23:36 GMT; path=/; domain=.typicode.com; HttpOnly
       X-Powered-By:
       - Express
       Vary:
@@ -40,34 +40,32 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       Cache-Control:
-      - public, max-age=14400
+      - no-cache
       Pragma:
       - no-cache
       Expires:
-      - Thu, 18 Jan 2018 14:58:08 GMT
+      - "-1"
       X-Content-Type-Options:
       - nosniff
       Etag:
-      - W/"124-yiKdLzqO5gfBrJFrcdJ8Yq0LGnU"
+      - W/"e7-0BduPO3JPrmszuXLELJqrW9+Syw"
       Via:
       - 1.1 vegur
-      Cf-Cache-Status:
-      - HIT
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
       Server:
       - cloudflare
       Cf-Ray:
-      - 3df109946b2c4e18-DME
+      - 3df3ee0148514ede-DME
     body:
       encoding: UTF-8
       string: |-
         {
           "userId": 1,
           "id": 1,
-          "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+          "title": "Mistie Carter",
           "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
         }
     http_version: 
-  recorded_at: Thu, 18 Jan 2018 10:58:08 GMT
+  recorded_at: Thu, 18 Jan 2018 19:23:36 GMT
 recorded_with: VCR 3.0.3
