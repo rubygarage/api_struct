@@ -1,0 +1,71 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://jsonplaceholder.typicode.com/posts/1
+    body:
+      encoding: UTF-8
+      string: '{"title":"Muoi Konopelski"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Connection:
+      - close
+      Host:
+      - jsonplaceholder.typicode.com
+      User-Agent:
+      - http.rb/3.0.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 18 Jan 2018 10:57:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '233'
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=d10e11686645ac154a5744099110712ca1516273028; expires=Fri, 18-Jan-19
+        10:57:08 GMT; path=/; domain=.typicode.com; HttpOnly
+      X-Powered-By:
+      - Express
+      Vary:
+      - Origin, Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Expires:
+      - "-1"
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - W/"e9-wXtzgi5ecrzN2r+bE7DagAW2Ero"
+      Via:
+      - 1.1 vegur
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 3df1081d2c734e06-DME
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "userId": 1,
+          "id": 1,
+          "title": "Muoi Konopelski",
+          "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        }
+    http_version: 
+  recorded_at: Thu, 18 Jan 2018 10:57:09 GMT
+recorded_with: VCR 3.0.3

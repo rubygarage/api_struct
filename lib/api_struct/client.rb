@@ -1,5 +1,10 @@
 module ApiStruct
   class Client
+    DEFAULT_HEADERS = { 
+      'Accept': 'application/json',
+      'Content-Type': 'application/json' 
+    }
+
     attr_reader :client
 
     def self.method_missing(method_name, *args, &block)
@@ -29,7 +34,8 @@ module ApiStruct
 
     def initialize
       api_settings_exist
-      @client = HTTP::Client.new(headers: headers)
+      client_headers = headers || DEFAULT_HEADERS
+      @client = HTTP::Client.new(headers: client_headers)
     end
 
     private
