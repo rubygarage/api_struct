@@ -12,6 +12,3 @@ Documentation:
 
 FrozenStringLiteralComment:
   Enabled: false
-
-Style/FileName:
-  Enabled: false
