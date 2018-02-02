@@ -26,9 +26,8 @@ ApiStruct::Settings.configure do |config|
     first_api: {
       root: 'http://localhost:3000/api/v1',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': "Token SOME_TOKEN"
+        'content-type': 'application/json',
+        'Authorization': 'Bearer TOKEN'
       }
     },
     second_api: {
@@ -74,6 +73,48 @@ Usage:
 ```ruby
 network = Network.show('T7WU9CG65')
 networks = Network.index
+```
+
+## More samples
+
+Nested resources:
+
+```ruby
+class PostClient < ApiStruct::Client
+  first_api '/users'
+
+  def update(user_id, id, post_data)
+    put("/#{user_id}/posts/#{id}", json: post_data)
+  end
+end
+```
+
+Dynamic headers:
+
+```ruby
+class Auth
+  def self.call
+    # Get a token..
+  end
+end
+```
+
+```ruby
+class AuthHeaderValue
+  def self.call
+    { "Authorization": "Bearer #{Auth.call}" }
+  end
+end
+```
+
+```ruby
+class PostClient < ApiStruct::Client
+  first_api '/users'
+
+  def update(user_id, id, post_data)
+    put("/#{user_id}/posts/#{id}", json: post_data, headers: AuthHeaderValue.call)
+  end
+end
 ```
 
 ## Contributing
