@@ -1,0 +1,71 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://jsonplaceholder.typicode.com/posts/1
+    body:
+      encoding: UTF-8
+      string: '{"title":"Mistie Carter"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Connection:
+      - close
+      Host:
+      - jsonplaceholder.typicode.com
+      User-Agent:
+      - http.rb/3.0.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 18 Jan 2018 19:23:36 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '231'
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=d3beb9d4061acf63428653caa383356a31516303416; expires=Fri, 18-Jan-19
+        19:23:36 GMT; path=/; domain=.typicode.com; HttpOnly
+      X-Powered-By:
+      - Express
+      Vary:
+      - Origin, Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Expires:
+      - "-1"
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - W/"e7-0BduPO3JPrmszuXLELJqrW9+Syw"
+      Via:
+      - 1.1 vegur
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 3df3ee0148514ede-DME
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "userId": 1,
+          "id": 1,
+          "title": "Mistie Carter",
+          "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        }
+    http_version: 
+  recorded_at: Thu, 18 Jan 2018 19:23:36 GMT
+recorded_with: VCR 3.0.3
