@@ -11,6 +11,7 @@ require_relative 'api_struct/extensions/api_client'
 require_relative 'api_struct/extensions/dry_monads'
 require_relative 'api_struct/errors/client'
 require_relative 'api_struct/client'
+require_relative 'api_struct/collection'
 require_relative 'api_struct/entity'
 require_relative 'api_struct/errors/entity'
 
