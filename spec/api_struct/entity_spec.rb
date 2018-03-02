@@ -43,7 +43,9 @@ describe ApiStruct::Entity do
     entities = StubEntity.collection([response, response])
 
     expect(entities.count).to eq(2)
-    expect(entities.class).to eq(Array)
+    expect(entities.success?).to eq(true)
+    expect(entities.failure?).to eq(false)
+    expect(entities.class).to eq(ApiStruct::Collection)
     expect(entities.first.title).to eq(response[:title])
   end
 
@@ -98,7 +100,7 @@ describe ApiStruct::Entity do
       VCR.use_cassette('posts/index_success') do
         entities = StubEntity.from_monad(StubClient.new.index)
 
-        expect(entities.class).to eq(Array)
+        expect(entities.class).to eq(ApiStruct::Collection)
         expect(entities.first.id).to eq(1)
       end
     end
@@ -119,7 +121,7 @@ describe ApiStruct::Entity do
       VCR.use_cassette('posts/index_success') do
         entities = StubEntity.index
 
-        expect(entities.class).to eq(Array)
+        expect(entities.class).to eq(ApiStruct::Collection)
         expect(entities.first.id).to eq(1)
       end
     end

@@ -32,8 +32,7 @@ module ApiStruct
       end
 
       def collection(entities, entity_type = self)
-        raise EntityError, 'Collection must be a Array' unless entities.is_a? Array
-        entities.map { |item| convert_to_entity(item, entity_type) }
+        Collection.new(entities, entity_type)
       end
 
       def convert_to_entity(item, entity_type = self)
