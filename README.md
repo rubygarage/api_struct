@@ -40,17 +40,31 @@ end
 
 Endpoint client:
 ```ruby
-class NetworkClient < ApiStruct::Client
-  first_api '/networks'
+class PostsClient < ApiStruct::Client
+  first_api :posts
 
   def show(id)
-    get("/#{id}")
+    get(id)
   end
 
   def index
     get
   end
+  
+  def user_posts(user_id, post_id = nil)
+    get(post_id, prefix: [:users, user_id]) # or get(post_id, prefix: '/users/:id', id: user_id)
+  end
+  
+  def custom_path(user_id)
+    get(path: 'users_posts/:user_id', user_id: user_id)
+  end
 end
+
+# PostsClient.new.get(1)           -> /posts/1
+# PostsClient.new.index            -> /posts 
+# PostsClient.new.user_posts(1)    -> /users/1/posts
+# PostsClient.new.user_posts(1, 2) -> /users/1/posts/2
+# PostsClient.new.custom_path(1)   -> /users_posts/1/
 ```
 
 Response serializers:
@@ -80,13 +94,20 @@ networks = Network.index
 Nested resources:
 
 ```ruby
-class PostClient < ApiStruct::Client
-  first_api '/users'
+class UserPostsClient < ApiStruct::Client
+  first_api '/users/:user_id/posts'
 
-  def update(user_id, id, post_data)
-    put("/#{user_id}/posts/#{id}", json: post_data)
+  def index(user_id)
+    get(user_id: user_id)
+  end
+  
+  def show(user_id, post_id)
+     get(post_id, user_id: user_id)
   end
 end
+
+# UserPostsClient.new.index(1)   -> /users/1/posts
+# UserPostsClient.new.show(1, 2) -> /users/1/posts/2
 ```
 
 Dynamic headers:

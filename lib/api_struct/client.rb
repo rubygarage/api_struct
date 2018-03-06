@@ -4,6 +4,7 @@ module ApiStruct
       'Accept': 'application/json',
       'Content-Type': 'application/json' 
     }
+    URL_OPTION_REGEXP = /\/:([a-z_]+)/.freeze
 
     attr_reader :client
 
@@ -11,9 +12,8 @@ module ApiStruct
       endpoints = Settings.config.endpoints
       return super unless endpoints.keys.include?(method_name)
 
-      define_method(:root) do
-        endpoints[method_name][:root] + first_arg(args)
-      end
+      define_method(:api_root) { endpoints[method_name][:root] }
+      define_method(:default_path) { first_arg(args) }
 
       define_method(:headers) do
         endpoints[method_name][:headers]
@@ -23,9 +23,9 @@ module ApiStruct
     HTTP_METHODS = %i[get post patch put delete].freeze
 
     HTTP_METHODS.each do |http_method|
-      define_method http_method do |*args|
+      define_method http_method do |*args, **options|
         begin
-          wrap client.send(http_method, *http_argumets(args))
+          wrap client.send(http_method, build_url(args, options), options)
         rescue HTTP::ConnectionError => e
           failure(body: e.message, status: :not_connected)
         end
@@ -59,14 +59,27 @@ module ApiStruct
       args.first.to_s
     end
 
-    def http_argumets(args)
-      args[0] = root + first_arg(args) if args[0].instance_of?(String)
-      args.unshift(root) if args[0].instance_of?(Hash)
-      args
+    def build_url(args, options)
+      suffix = to_path(args)
+      prefix = to_path(options.delete(:prefix))
+      path = to_path(options.delete(:path) || default_path)
+
+      replace_optional_params(to_path(api_root, prefix, path, suffix), options)
+    end
+
+    def to_path(*args)
+      Array(args).reject { |o| o.respond_to?(:empty?) ? o.empty? : !o }.join('/')
+    end
+
+    def replace_optional_params(url, options)
+      url.gsub(URL_OPTION_REGEXP) do
+        value = options.delete($1.to_sym)
+        value ? "/#{value}" : ''
+      end
     end
 
     def api_settings_exist
-      return if respond_to?(:root)
+      return if respond_to?(:api_root)
       raise RuntimeError, "\nSet api configuration for #{self.class}."
     end
   end
