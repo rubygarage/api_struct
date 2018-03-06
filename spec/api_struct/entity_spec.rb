@@ -4,10 +4,10 @@ describe ApiStruct::Entity do
   stub_api('https://jsonplaceholder.typicode.com')
 
   class StubClient < ApiStruct::Client
-    stub_api '/posts'
+    stub_api 'posts'
 
     def show(id)
-      get("/#{id}")
+      get(id)
     end
 
     def index(params = {})
