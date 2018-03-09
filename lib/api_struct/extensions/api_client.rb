@@ -4,7 +4,7 @@ module ApiStruct
       attr_reader :client
 
       def client_service(service)
-        @client = service.new
+        @client = service
         service.instance_methods(false).each do |method|
           define_client_method(method)
         end
@@ -14,7 +14,7 @@ module ApiStruct
 
       def define_client_method(method)
         define_singleton_method method do |*args|
-          from_monad(client.send(method, *args))
+          from_monad(client.new.send(method, *args))
         end
       end
     end
