@@ -7,6 +7,7 @@ require 'hashie'
 
 require_relative 'api_struct/version'
 require_relative 'api_struct/settings'
+require_relative 'api_struct/concerns/underscore'
 require_relative 'api_struct/extensions/api_client'
 require_relative 'api_struct/extensions/dry_monads'
 require_relative 'api_struct/errors/client'
