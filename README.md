@@ -70,6 +70,11 @@ end
 Response serializers:
 ```ruby
 class User < ApiStruct::Entity
+  client_service UsersClient
+  client_service AuthorsClient, prefix: true, only: :index
+  # or
+  # client_service AuthorsClient, prefix: :prefix, except: :index
+  
   attr_entity :name, :id
 end
 
@@ -87,6 +92,10 @@ Usage:
 ```ruby
 network = Network.show('T7WU9CG65')
 networks = Network.index
+users = User.show(1)
+users = User.authors_client_index
+# or
+# users = User.prefix_index
 ```
 
 ## More samples

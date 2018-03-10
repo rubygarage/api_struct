@@ -21,6 +21,11 @@ describe ApiStruct::Entity do
 
   class StubEntity < ApiStruct::Entity
     client_service StubClient
+    client_service StubClient, prefix: true
+    client_service StubClient, prefix: :custom
+    client_service StubClient, prefix: :only, only: :index
+    client_service StubClient, prefix: :except, except: :show
+
     attr_entity :id, :title
 
     has_entity :nested_entity, as: StubNestedEntity
@@ -123,6 +128,57 @@ describe ApiStruct::Entity do
 
         expect(entities.class).to eq(ApiStruct::Collection)
         expect(entities.first.id).to eq(1)
+      end
+    end
+  end
+
+  describe '.client_service' do
+    context 'prefix' do
+      context 'empty' do
+        it 'should register client as base' do
+          expect(StubEntity.clients[:base]).to eq StubClient
+        end
+
+        it 'should define client methods without prefix' do
+          expect(StubEntity).to be_respond_to(:show)
+          expect(StubEntity).to be_respond_to(:index)
+        end
+      end
+
+      context 'eq true' do
+        it 'should register client as stubclient' do
+          expect(StubEntity.clients[:stub_client]).to eq StubClient
+        end
+
+        it 'should define client methods' do
+          expect(StubEntity).to be_respond_to(:stub_client_show)
+          expect(StubEntity).to be_respond_to(:stub_client_index)
+        end
+      end
+
+      context 'eq string' do
+        it 'should register client as custom' do
+          expect(StubEntity.clients[:custom]).to eq StubClient
+        end
+
+        it 'should define client methods' do
+          expect(StubEntity).to be_respond_to(:custom_show)
+          expect(StubEntity).to be_respond_to(:custom_index)
+        end
+      end
+    end
+
+    context 'only' do
+      it 'should define methods from options[:only]' do
+        expect(StubEntity).to be_respond_to(:only_index)
+        expect(StubEntity).not_to be_respond_to(:only_show)
+      end
+    end
+
+    context 'except' do
+      it 'should define all methods except options[:except]' do
+        expect(StubEntity).to be_respond_to(:except_index)
+        expect(StubEntity).not_to be_respond_to(:except_show)
       end
     end
   end
