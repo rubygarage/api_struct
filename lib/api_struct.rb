@@ -2,7 +2,6 @@ require 'http'
 require 'dry-monads'
 require 'dry-configurable'
 require 'json'
-require 'pry-byebug'
 require 'hashie'
 
 require_relative 'api_struct/version'
