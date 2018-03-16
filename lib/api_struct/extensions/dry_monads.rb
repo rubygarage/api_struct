@@ -6,6 +6,7 @@ module ApiStruct
       end
 
       def from_right(value)
+        return Dry::Monads::Right(nil) if value.nil?
         value.is_a?(Array) ? collection(value) : new(value)
       end
 
