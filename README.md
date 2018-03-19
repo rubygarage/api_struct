@@ -121,7 +121,7 @@ class PostClient < ApiStruct::Client
   first_api :posts
 
   def update(id, post_data)
-    put(id json: post_data, headers: AuthHeaderValue.call)
+    put(id, json: post_data, headers: AuthHeaderValue.call)
   end
 end
 ```
