@@ -98,28 +98,7 @@ users = User.authors_client_index
 # users = User.prefix_index
 ```
 
-## More samples
-
-Nested resources:
-
-```ruby
-class UserPostsClient < ApiStruct::Client
-  first_api '/users/:user_id/posts'
-
-  def index(user_id)
-    get(user_id: user_id)
-  end
-  
-  def show(user_id, post_id)
-     get(post_id, user_id: user_id)
-  end
-end
-
-# UserPostsClient.new.index(1)   -> /users/1/posts
-# UserPostsClient.new.show(1, 2) -> /users/1/posts/2
-```
-
-Dynamic headers:
+## Dynamic headers:
 
 ```ruby
 class Auth
@@ -139,10 +118,10 @@ end
 
 ```ruby
 class PostClient < ApiStruct::Client
-  first_api '/users'
+  first_api :posts
 
-  def update(user_id, id, post_data)
-    put("/#{user_id}/posts/#{id}", json: post_data, headers: AuthHeaderValue.call)
+  def update(id, post_data)
+    put(id json: post_data, headers: AuthHeaderValue.call)
   end
 end
 ```
