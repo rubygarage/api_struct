@@ -38,7 +38,9 @@ ApiStruct::Settings.configure do |config|
 end
 ```
 
-Endpoint client:
+# Client
+Endpoint wrapper
+
 ```ruby
 class PostsClient < ApiStruct::Client
   first_api :posts
@@ -59,15 +61,31 @@ class PostsClient < ApiStruct::Client
     get(path: 'users_posts/:user_id', user_id: user_id)
   end
 end
-
-# PostsClient.new.get(1)           -> /posts/1
-# PostsClient.new.index            -> /posts 
-# PostsClient.new.user_posts(1)    -> /users/1/posts
-# PostsClient.new.user_posts(1, 2) -> /users/1/posts/2
-# PostsClient.new.custom_path(1)   -> /users_posts/1/
 ```
 
-Response serializers:
+Usage:
+```ruby
+PostsClient.new.get(1) # -> /posts/1
+```
+Returns `Either` [monad](https://github.com/dry-rb/dry-monads)
+```ruby
+# => Right({:id=>1, :title=>"Post"})
+```
+
+Other methods from sample:
+```ruby
+post_client = PostsClient.new
+
+post_client.index            # -> /posts 
+post_client.user_posts(1)    # -> /users/1/posts
+post_client.user_posts(1, 2) # -> /users/1/posts/2
+post_client.custom_path(1)   # -> /users_posts/1/
+```
+
+
+# Entity
+Response serializer
+
 ```ruby
 class User < ApiStruct::Entity
   client_service UsersClient
@@ -77,7 +95,19 @@ class User < ApiStruct::Entity
   
   attr_entity :name, :id
 end
+```
 
+Usage:
+```ruby
+users = User.show(1)
+
+users = User.authors_client_index
+# or
+# users = User.prefix_index
+```
+
+Response serializers with related entities:
+```ruby
 class Network < ApiStruct::Entity
   client_service NetworkClient
 
@@ -92,10 +122,6 @@ Usage:
 ```ruby
 network = Network.show('T7WU9CG65')
 networks = Network.index
-users = User.show(1)
-users = User.authors_client_index
-# or
-# users = User.prefix_index
 ```
 
 ## Dynamic headers:
