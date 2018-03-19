@@ -54,7 +54,9 @@ class PostsClient < ApiStruct::Client
   end
   
   def user_posts(user_id, post_id = nil)
-    get(post_id, prefix: [:users, user_id]) # or get(post_id, prefix: '/users/:id', id: user_id)
+    get(post_id, prefix: [:users, user_id]) 
+    # alias: 
+    # get(post_id, prefix: '/users/:id', id: user_id)
   end
   
   def custom_path(user_id)
@@ -89,18 +91,43 @@ Response serializer
 ```ruby
 class User < ApiStruct::Entity
   client_service UsersClient
+
   client_service AuthorsClient, prefix: true, only: :index
-  # or
+  # alias: 
   # client_service AuthorsClient, prefix: :prefix, except: :index
   
   attr_entity :name, :id
 end
 ```
 
+```ruby
+class UsersClient < ApiStruct::Client
+  first_api :users
+
+  def show(id)
+    get(id)
+  end
+end
+```
+
+```ruby
+class AuthorsClient < ApiStruct::Client
+  first_api :authors
+
+  def index
+    get
+  end
+end
+```
+
 Usage:
 ```ruby
-users = User.show(1)
+user = User.show(1)
+# => {"id"=>1, "name"=>"John"}
+```
 
+Call methods from prefixed clients:
+```ruby
 users = User.authors_client_index
 # or
 # users = User.prefix_index
@@ -118,10 +145,23 @@ class Network < ApiStruct::Entity
 end
 ```
 
+```ruby
+class NetworkClient < ApiStruct::Client
+  first_api :networks
+
+  def show(id)
+    get(id)
+  end
+end
+```
+
 Usage:
 ```ruby
-network = Network.show('T7WU9CG65')
-networks = Network.index
+network = Network.show(1)
+# => {"id"=>1, "name"=>"Main network", "state"=>"active", "super_admin"=>{"id"=>1, "name"=>"John"}}
+
+network.state
+# => :active
 ```
 
 ## Dynamic headers:
