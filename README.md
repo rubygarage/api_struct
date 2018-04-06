@@ -2,6 +2,8 @@
 
 **ApiStruct** consists of two main interfaces: `ApiStruct::Client` and `ApiStruct::Entity`. The `ApiStruct::Client` class is aimed at using the same interface for describing requests to different APIs. The `ApiStruct::Entity` enables you to use *ApiStruct* clients in ORM-like style.
 
+[![Gem Version](https://badge.fury.io/rb/api_struct.svg)](https://badge.fury.io/rb/api_struct)
+
 ## Installation
 
 Add this line to your application's Gemfile:
