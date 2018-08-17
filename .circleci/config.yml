@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.4-node 
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - api-struct-bundle-v2-{{ checksum "api_struct.gemspec" }}
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      - save_cache:
+          key: api-struct-bundle-v2-{{ checksum "api_struct.gemspec" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Run Rspec
+          command: bundle exec rspec 
