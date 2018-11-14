@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    api_struct (0.1.0)
+    api_struct (1.0.0)
       dry-configurable (~> 0.7.0)
       dry-monads (~> 1.0)
       hashie (~> 3.5, >= 3.5.6)
