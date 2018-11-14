@@ -9,7 +9,7 @@ describe ApiStruct::Client do
     def show(id)
       get(id)
     end
-    
+
     def update(id, params)
       patch(id, json: params)
     end
@@ -61,8 +61,8 @@ describe ApiStruct::Client do
       VCR.use_cassette('users/1/posts') do
         response = StubClient.new.get(prefix: 'users/:id', id: 1)
         expect(response).to be_success
-        expect(response.value).to be_kind_of Array
-        expect(response.value).not_to be_empty
+        expect(response.value!).to be_kind_of Array
+        expect(response.value!).not_to be_empty
       end
     end
 
@@ -70,9 +70,9 @@ describe ApiStruct::Client do
       VCR.use_cassette('todos') do
         response = StubClient.new.get(path: 'todos/1')
         expect(response).to be_success
-        expect(response.value[:id]).to eq(1)
-        expect(response.value[:title]).not_to be_empty
-        expect(response.value.keys).to include(:completed)
+        expect(response.value![:id]).to eq(1)
+        expect(response.value![:title]).not_to be_empty
+        expect(response.value!.keys).to include(:completed)
       end
     end
 
@@ -80,20 +80,20 @@ describe ApiStruct::Client do
       VCR.use_cassette('todos') do
         response = StubClient.new.get(path: [:todos, 1])
         expect(response).to be_success
-        expect(response.value[:id]).to eq(1)
-        expect(response.value[:title]).not_to be_empty
-        expect(response.value.keys).to include(:completed)
+        expect(response.value![:id]).to eq(1)
+        expect(response.value![:title]).not_to be_empty
+        expect(response.value!.keys).to include(:completed)
       end
     end
   end
-  
+
   context 'GET' do
     it 'when successful response' do
       VCR.use_cassette('posts/show_success') do
         response = StubClient.new.show(1)
         expect(response).to be_success
-        expect(response.value[:id]).to eq(1)
-        expect(response.value[:title]).not_to be_empty
+        expect(response.value![:id]).to eq(1)
+        expect(response.value![:title]).not_to be_empty
       end
     end
 
@@ -101,7 +101,7 @@ describe ApiStruct::Client do
       VCR.use_cassette('posts/show_failure') do
         response = StubClient.new.show(101)
         expect(response).to be_failure
-        expect(response.value.status).to eq(404)
+        expect(response.failure.status).to eq(404)
       end
     end
   end
@@ -111,7 +111,7 @@ describe ApiStruct::Client do
       VCR.use_cassette('posts/update_success') do
         response = StubClient.new.update(1, title: FFaker::Name.name)
         expect(response).to be_success
-        expect(response.value[:id]).to eq(1)
+        expect(response.value![:id]).to eq(1)
       end
     end
   end
