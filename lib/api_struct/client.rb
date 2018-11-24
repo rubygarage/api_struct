@@ -1,8 +1,8 @@
 module ApiStruct
   class Client
-    DEFAULT_HEADERS = { 
+    DEFAULT_HEADERS = {
       'Accept': 'application/json',
-      'Content-Type': 'application/json' 
+      'Content-Type': 'application/json'
     }
     URL_OPTION_REGEXP = /\/:([a-z_]+)/.freeze
 
@@ -47,12 +47,12 @@ module ApiStruct
     def success(response)
       body = response.body.to_s
       result = !body.empty? ? JSON.parse(body, symbolize_names: true) : nil
-      Dry::Monads.Right(result)
+      Dry::Monads::Success(result)
     end
 
     def failure(response)
       result = ApiStruct::Errors::Client.new(response)
-      Dry::Monads.Left(result)
+      Dry::Monads::Failure(result)
     end
 
     def first_arg(args)

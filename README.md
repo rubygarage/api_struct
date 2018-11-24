@@ -58,13 +58,13 @@ class PostsClient < ApiStruct::Client
   def index
     get
   end
-  
+
   def user_posts(user_id, post_id = nil)
-    get(post_id, prefix: [:users, user_id]) 
-    # alias: 
+    get(post_id, prefix: [:users, user_id])
+    # alias:
     # get(post_id, prefix: '/users/:id', id: user_id)
   end
-  
+
   def custom_path(user_id)
     get(path: 'users_posts/:user_id', user_id: user_id)
   end
@@ -75,16 +75,16 @@ Usage:
 ```ruby
 PostsClient.new.get(1) # -> /posts/1
 ```
-Returns `Either` [monad](https://github.com/dry-rb/dry-monads)
+Returns `Result` [monad](https://dry-rb.org/gems/dry-monads/1.0/result/)
 ```ruby
-# => Right({:id=>1, :title=>"Post"})
+# => Success({:id=>1, :title=>"Post"})
 ```
 
 Other methods from sample:
 ```ruby
 post_client = PostsClient.new
 
-post_client.index            # -> /posts 
+post_client.index            # -> /posts
 post_client.user_posts(1)    # -> /users/1/posts
 post_client.user_posts(1, 2) # -> /users/1/posts/2
 post_client.custom_path(1)   # -> /users_posts/1/
@@ -99,9 +99,9 @@ class User < ApiStruct::Entity
   client_service UsersClient
 
   client_service AuthorsClient, prefix: true, only: :index
-  # alias: 
+  # alias:
   # client_service AuthorsClient, prefix: :prefix, except: :index
-  
+
   attr_entity :name, :id
 end
 ```
