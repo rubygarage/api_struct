@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://jsonplaceholder.typicode.com/posts/101
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Connection:
+      - close
+      Host:
+      - jsonplaceholder.typicode.com
+      User-Agent:
+      - http.rb/3.0.0
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Thu, 18 Jan 2018 19:23:37 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '27'
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=dea576b2c58beb4acebfa8cc1b8f3cd731516303417; expires=Fri, 18-Jan-19
+        19:23:37 GMT; path=/; domain=.typicode.com; HttpOnly
+      X-Powered-By:
+      - Express
+      Vary:
+      - Origin, Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - public, max-age=14400
+      Pragma:
+      - no-cache
+      Expires:
+      - Thu, 18 Jan 2018 23:23:37 GMT
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - EXPIRED
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 3df3ee046ef84f20-DME
+    body:
+      encoding: UTF-8
+      string: "<body>404. Not Found</body>"
+    http_version:
+  recorded_at: Thu, 18 Jan 2018 19:23:37 GMT
+recorded_with: VCR 3.0.3
