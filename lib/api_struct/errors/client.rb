@@ -35,6 +35,8 @@ module ApiStruct
 
       def parse_body(b)
         !b.empty? ? JSON.parse(b, symbolize_names: true) : nil
+      rescue JSON::ParserError
+        b
       end
     end
   end

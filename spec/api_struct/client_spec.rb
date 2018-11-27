@@ -104,6 +104,17 @@ describe ApiStruct::Client do
         expect(response.failure.status).to eq(404)
       end
     end
+
+    it 'when failed response with html response' do
+      VCR.use_cassette('posts/show_failure_html') do
+        response = StubClient.new.show(101)
+        body     = response.failure.body
+        expect(response).to be_failure
+        expect(response.failure.status).to eq(404)
+        expect(body).to be_kind_of(String)
+        expect(body).to match(/<body>.+<\/body>/)
+      end
+    end
   end
 
   context 'PATCH' do
