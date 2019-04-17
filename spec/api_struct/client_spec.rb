@@ -1,7 +1,10 @@
 describe ApiStruct::Client do
   extend Support::Stub
-  let(:api_root) { 'https://jsonplaceholder.typicode.com' }
-  stub_api('https://jsonplaceholder.typicode.com')
+  API_ROOT = 'https://jsonplaceholder.typicode.com'
+
+  let(:api_root) { API_ROOT }
+  stub_api(API_ROOT)
+  let(:client) { StubClient.new }
 
   class StubClient < ApiStruct::Client
     stub_api :posts
@@ -17,7 +20,6 @@ describe ApiStruct::Client do
 
   context 'build url options' do
     context 'url options' do
-      let(:client) { StubClient.new }
       it ' should replace /posts/users/:id to /posts/users if URL option didnt provided' do
         url = client.send(:build_url, 'users/:id', {})
         expect(url).to eq api_root + '/posts/users'
@@ -57,9 +59,10 @@ describe ApiStruct::Client do
         expect(url).to eq api_root + '/users/1/posts/2'
       end
     end
+
     it 'should build url with prefix' do
       VCR.use_cassette('users/1/posts') do
-        response = StubClient.new.get(prefix: 'users/:id', id: 1)
+        response = client.get(prefix: 'users/:id', id: 1)
         expect(response).to be_success
         expect(response.value!).to be_kind_of Array
         expect(response.value!).not_to be_empty
@@ -68,7 +71,7 @@ describe ApiStruct::Client do
 
     it 'should build url with custom path' do
       VCR.use_cassette('todos') do
-        response = StubClient.new.get(path: 'todos/1')
+        response = client.get(path: 'todos/1')
         expect(response).to be_success
         expect(response.value![:id]).to eq(1)
         expect(response.value![:title]).not_to be_empty
@@ -76,9 +79,28 @@ describe ApiStruct::Client do
       end
     end
 
+    context 'Default params' do
+      let(:user_id) { 2 }
+
+      before do
+        allow(client).to receive(:default_params).and_return(userId: user_id)
+      end
+
+      it 'should build url with default params' do
+        VCR.use_cassette('user_todos') do
+          response = client.get(path: 'todos')
+
+          expect(response).to be_success
+          response.value!.each do |response|
+            expect(response[:userId]).to eq(user_id)
+          end
+        end
+      end
+    end
+
     it 'should build url with prefix as array' do
       VCR.use_cassette('todos') do
-        response = StubClient.new.get(path: [:todos, 1])
+        response = client.get(path: [:todos, 1])
         expect(response).to be_success
         expect(response.value![:id]).to eq(1)
         expect(response.value![:title]).not_to be_empty
@@ -90,7 +112,7 @@ describe ApiStruct::Client do
   context 'GET' do
     it 'when successful response' do
       VCR.use_cassette('posts/show_success') do
-        response = StubClient.new.show(1)
+        response = client.show(1)
         expect(response).to be_success
         expect(response.value![:id]).to eq(1)
         expect(response.value![:title]).not_to be_empty
@@ -99,7 +121,7 @@ describe ApiStruct::Client do
 
     it 'when failed response' do
       VCR.use_cassette('posts/show_failure') do
-        response = StubClient.new.show(101)
+        response = client.show(101)
         expect(response).to be_failure
         expect(response.failure.status).to eq(404)
       end
@@ -107,7 +129,7 @@ describe ApiStruct::Client do
 
     it 'when failed response with html response' do
       VCR.use_cassette('posts/show_failure_html') do
-        response = StubClient.new.show(101)
+        response = client.show(101)
         body     = response.failure.body
         expect(response).to be_failure
         expect(response.failure.status).to eq(404)
@@ -120,7 +142,7 @@ describe ApiStruct::Client do
   context 'PATCH' do
     it 'when successful response' do
       VCR.use_cassette('posts/update_success') do
-        response = StubClient.new.update(1, title: FFaker::Name.name)
+        response = client.update(1, title: FFaker::Name.name)
         expect(response).to be_success
         expect(response.value![:id]).to eq(1)
       end

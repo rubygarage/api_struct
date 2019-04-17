@@ -1,0 +1,189 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://jsonplaceholder.typicode.com/todos?userId=2
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Connection:
+      - close
+      Host:
+      - jsonplaceholder.typicode.com
+      User-Agent:
+      - http.rb/4.1.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 17 Apr 2019 18:24:07 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      Set-Cookie:
+      - __cfduid=dc82c08fc0528b00d44fd9dc69a3d5bf91555525447; expires=Thu, 16-Apr-20
+        18:24:07 GMT; path=/; domain=.typicode.com; HttpOnly
+      X-Powered-By:
+      - Express
+      Vary:
+      - Origin, Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - public, max-age=14400
+      Pragma:
+      - no-cache
+      Expires:
+      - Wed, 17 Apr 2019 22:24:07 GMT
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - W/"940-PY6FbG4RbU9NVn6pD/xl3LdEHgs"
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - HIT
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 4c906f20ea39cc81-WAW
+    body:
+      encoding: UTF-8
+      string: |-
+        [
+          {
+            "userId": 2,
+            "id": 21,
+            "title": "suscipit repellat esse quibusdam voluptatem incidunt",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 22,
+            "title": "distinctio vitae autem nihil ut molestias quo",
+            "completed": true
+          },
+          {
+            "userId": 2,
+            "id": 23,
+            "title": "et itaque necessitatibus maxime molestiae qui quas velit",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 24,
+            "title": "adipisci non ad dicta qui amet quaerat doloribus ea",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 25,
+            "title": "voluptas quo tenetur perspiciatis explicabo natus",
+            "completed": true
+          },
+          {
+            "userId": 2,
+            "id": 26,
+            "title": "aliquam aut quasi",
+            "completed": true
+          },
+          {
+            "userId": 2,
+            "id": 27,
+            "title": "veritatis pariatur delectus",
+            "completed": true
+          },
+          {
+            "userId": 2,
+            "id": 28,
+            "title": "nesciunt totam sit blanditiis sit",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 29,
+            "title": "laborum aut in quam",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 30,
+            "title": "nemo perspiciatis repellat ut dolor libero commodi blanditiis omnis",
+            "completed": true
+          },
+          {
+            "userId": 2,
+            "id": 31,
+            "title": "repudiandae totam in est sint facere fuga",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 32,
+            "title": "earum doloribus ea doloremque quis",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 33,
+            "title": "sint sit aut vero",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 34,
+            "title": "porro aut necessitatibus eaque distinctio",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 35,
+            "title": "repellendus veritatis molestias dicta incidunt",
+            "completed": true
+          },
+          {
+            "userId": 2,
+            "id": 36,
+            "title": "excepturi deleniti adipisci voluptatem et neque optio illum ad",
+            "completed": true
+          },
+          {
+            "userId": 2,
+            "id": 37,
+            "title": "sunt cum tempora",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 38,
+            "title": "totam quia non",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 39,
+            "title": "doloremque quibusdam asperiores libero corrupti illum qui omnis",
+            "completed": false
+          },
+          {
+            "userId": 2,
+            "id": 40,
+            "title": "totam atque quo nesciunt",
+            "completed": true
+          }
+        ]
+    http_version: 
+  recorded_at: Wed, 17 Apr 2019 18:24:07 GMT
+recorded_with: VCR 3.0.3
