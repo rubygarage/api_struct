@@ -13,6 +13,7 @@ module ApiStruct
       return super unless endpoints.keys.include?(method_name)
 
       define_method(:api_root) { endpoints[method_name][:root] }
+      define_method(:default_params) { endpoints[method_name][:params] || {} }
       define_method(:default_path) { first_arg(args) }
 
       define_method(:headers) do
@@ -25,6 +26,7 @@ module ApiStruct
     HTTP_METHODS.each do |http_method|
       define_method http_method do |*args, **options|
         begin
+          options[:params] = default_params.merge(options[:params] || {})
           wrap client.send(http_method, build_url(args, options), options)
         rescue HTTP::ConnectionError => e
           failure(body: e.message, status: :not_connected)

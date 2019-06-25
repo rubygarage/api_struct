@@ -26,7 +26,7 @@ describe ApiStruct::Entity do
     client_service StubClient, prefix: :only, only: :index
     client_service StubClient, prefix: :except, except: :show
 
-    attr_entity :id, :title
+    attr_entity :id, :title, :camel_case
 
     has_entity :nested_entity, as: StubNestedEntity
     has_entities :another_nested_entities, as: StubNestedEntity
@@ -119,6 +119,7 @@ describe ApiStruct::Entity do
         expect(entity).to be_success
         expect(entity.id).to eq(1)
         expect(entity.title).not_to be_empty
+        expect(entity.camel_case).not_to be_empty
       end
     end
 

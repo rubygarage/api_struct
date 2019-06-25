@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'dry-monads', '~> 1.0'
   spec.add_dependency 'dry-configurable', '~> 0.7.0'
+  spec.add_dependency 'dry-inflector', '~>  0.1.2'
   spec.add_dependency 'http', '>= 2.0.3'
   spec.add_dependency 'hashie', '~> 3.5', '>= 3.5.6'
 
