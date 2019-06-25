@@ -38,7 +38,7 @@ ApiStruct::Settings.configure do |config|
     },
     second_api: {
       root: 'http://localhost:3001/api/v1',
-      # etc...
+      params: { token: 'Default token' }
     }
   }
 end
