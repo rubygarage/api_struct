@@ -1,5 +1,3 @@
-require 'pry'
-
 module ApiStruct
   class Client
     DEFAULT_HEADERS = {

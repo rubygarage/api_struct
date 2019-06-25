@@ -76,7 +76,12 @@ module ApiStruct
     private
 
     def extract_attributes(attributes)
-      attributes.select { |key, _value| self.class.entity_attributes.include?(key.to_sym) }
+      formatted_attributes = attributes.map { |name, value| [format_name(name), value] }.to_h
+      formatted_attributes.select { |key, _value| self.class.entity_attributes.include?(key.to_sym) }
+    end
+
+    def format_name(name)
+      Dry::Inflector.new.underscore(name).to_sym
     end
   end
 

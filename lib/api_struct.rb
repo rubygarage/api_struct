@@ -1,6 +1,7 @@
 require 'http'
 require 'dry/monads/result'
 require 'dry-configurable'
+require 'dry/inflector'
 require 'json'
 require 'hashie'
 
