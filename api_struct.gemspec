@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'dry-monads'
+  spec.add_dependency 'dry-monads', '~> 1'
   spec.add_dependency 'dry-configurable'
   spec.add_dependency 'dry-inflector'
   spec.add_dependency 'http'

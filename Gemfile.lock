@@ -1,10 +1,10 @@
 PATH
   remote: .
   specs:
-    api_struct (1.0.4)
+    api_struct (1.0.5)
       dry-configurable
       dry-inflector
-      dry-monads
+      dry-monads (~> 1)
       hashie
       http
 
