@@ -1,3 +1,7 @@
+# FORK DESCRIPTION
+
+This fork fixes a bug that prevents entities from having multiple clients. See https://github.com/rubygarage/api_struct/issues/14
+
 # <img src='https://github.com/rubygarage/api_struct/blob/master/api_struct.svg' height='60' alt='ApiStruct' />
 
 **ApiStruct** consists of two main interfaces: `ApiStruct::Client` and `ApiStruct::Entity`. The `ApiStruct::Client` class is aimed at using the same interface for describing requests to different APIs. The `ApiStruct::Entity` enables you to use *ApiStruct* clients in ORM-like style.

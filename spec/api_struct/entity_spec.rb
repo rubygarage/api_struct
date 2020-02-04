@@ -15,6 +15,14 @@ describe ApiStruct::Entity do
     end
   end
 
+  class AnotherStubClient  < ApiStruct::Client
+    stub_api 'posts'
+
+    def pull(id)
+      get(id)
+    end
+  end
+
   class StubNestedEntity < ApiStruct::Entity
     attr_entity :name
   end
@@ -25,13 +33,14 @@ describe ApiStruct::Entity do
     client_service StubClient, prefix: :custom
     client_service StubClient, prefix: :only, only: :index
     client_service StubClient, prefix: :except, except: :show
+    client_service AnotherStubClient
 
     attr_entity :id, :title, :camel_case
 
     has_entity :nested_entity, as: StubNestedEntity
     has_entities :another_nested_entities, as: StubNestedEntity
   end
-  
+
   let(:response) { { title: FFaker::Name.name, 'id' => rand(1..100), another_attributes: FFaker::Name.name } }
   let(:nested_response) { { name: FFaker::Name.name } }
 
@@ -136,8 +145,9 @@ describe ApiStruct::Entity do
   describe '.client_service' do
     context 'prefix' do
       context 'empty' do
-        it 'should register client as base' do
-          expect(StubEntity.clients[:base]).to eq StubClient
+        it 'should register client as its class name' do
+          expect(StubEntity.clients[:stub_client]).to eq StubClient
+          expect(StubEntity.clients[:another_stub_client]).to eq AnotherStubClient
         end
 
         it 'should define client methods without prefix' do
@@ -180,6 +190,14 @@ describe ApiStruct::Entity do
       it 'should define all methods except options[:except]' do
         expect(StubEntity).to be_respond_to(:except_index)
         expect(StubEntity).not_to be_respond_to(:except_show)
+      end
+    end
+
+    context 'two clients' do
+      it 'should define methods from multiple clients' do
+        expect(StubEntity).to be_respond_to(:index)
+        expect(StubEntity).to be_respond_to(:show)
+        expect(StubEntity).to be_respond_to(:pull)
       end
     end
   end
