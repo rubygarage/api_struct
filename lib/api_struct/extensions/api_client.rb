@@ -16,7 +16,7 @@ module ApiStruct
 
       def register_service(service, options)
         options[:prefix] = prefix_from_class(service) if options[:prefix] == true
-        options[:client_key] = options[:prefix] || :base
+        options[:client_key] = options[:prefix] || class_name_to_sym(service)
 
         @clients[options[:client_key]] = service
         allowed_methods(service, options).each { |method| define_client_method(method, options) }
@@ -37,6 +37,11 @@ module ApiStruct
         return Array(options[:only]) if options[:only]
         rejected = REJECTED_METHODS.concat(Array(options[:except]))
         service.instance_methods(false).reject { |method| rejected.include?(method) }
+      end
+
+      def class_name_to_sym(klass)
+        name = klass.to_s
+        name.gsub(/(.)([A-Z])/,'\1_\2').downcase.to_sym
       end
     end
   end
