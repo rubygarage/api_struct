@@ -19,6 +19,10 @@ module ApiStruct
       define_method(:headers) do
         endpoints[method_name][:headers]
       end
+
+      define_method(:basic_auth) do
+        endpoints[method_name][:basic_auth]
+      end
     end
 
     HTTP_METHODS = %i[get post patch put delete].freeze
@@ -38,6 +42,7 @@ module ApiStruct
       api_settings_exist
       client_headers = headers || DEFAULT_HEADERS
       @client = HTTP::Client.new(headers: client_headers)
+      @client = @client.basic_auth(basic_auth) if basic_auth
     end
 
     private
